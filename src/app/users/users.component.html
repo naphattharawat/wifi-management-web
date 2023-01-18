@@ -1,0 +1,116 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4 class="card-title ">รายชื่อเจ้าหน้าที่ที่ใช้งาน internet moph</h4>
+                            </div>
+                            <div class="col-md-4" style="text-align: right;">
+                                <button class="btn btn-sm btn-success" (click)="onClickAdd()">เพิ่ม</button>
+                            </div>
+                        </div>
+
+                        <!-- <p class="card-category"> Here is a subtitle for this table</p> -->
+                    </div>
+
+                    <div class="card-body">
+                        <span class="bmd-form-group">
+                            <div class="input-group no-border">
+                                <input type="text" value="" class="form-control" name="query" [(ngModel)]="query"
+                                    (keyup)=onKeySearch($event) placeholder="Search...">
+                                <button mat-raised-button (click)="onClickSearch()"
+                                    class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                        </span>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class=" text-primary">
+                                    <th>
+                                        ID
+                                    </th>
+                                    <th>
+                                        Username
+                                    </th>
+                                    <th>
+                                        Name
+                                    </th>
+                                    <th>
+                                        กอง
+                                    </th>
+                                    <th></th>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let i of list">
+                                        <td>
+                                            {{i.id}}
+                                        </td>
+                                        <td>
+                                            {{i.username}}
+                                        </td>
+                                        <td>
+                                            {{i.first_name}} {{i.last_name}}
+                                        </td>
+                                        <td>
+                                            {{i.division_name}}
+                                        </td>
+                                        <td class="td-actions text-right">
+                                            <button mat-raised-button type="button" matTooltip="Edit Task"
+                                                (click)="edit(i)" routerLinkActive="router-link-active"
+                                                [matTooltipPosition]="'above'"
+                                                class="btn btn-primary btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                            <button mat-raised-button type="button" matTooltip="Remove"
+                                                (click)="onClickRemove(i)" [matTooltipPosition]="'above'"
+                                                class="btn btn-danger btn-link btn-sm btn-just-icon">
+                                                <i class="material-icons">close</i>
+                                            </button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <nav aria-label="Page navigation example">
+                                <div *ngIf="page <= 5">
+                                    <ul class="pagination">
+                                        <li class="page-item page-link" (click)="onBackPage()">
+                                            Previous</li>
+                                        <li class="page-link" (click)="onClickPage(i+1)"
+                                            *ngFor="let c of counter(page);let i=index"
+                                            [ngClass]="{'actived': currentPage==i+1}">
+                                            {{i+1}}</li>
+                                        <li class="page-item page-link" (click)="onNextPage()">Next</li>
+                                    </ul>
+                                </div>
+                                <div *ngIf="page > 5">
+                                    <ul class="pagination">
+                                        <li class="page-item page-link" (click)="onBackPage()">
+                                            Previous</li>
+                                        <li *ngIf="currentPage>6" class="page-item page-link"
+                                            (click)="onClickPage(1)">1</li>
+                                        <li *ngIf="currentPage>6" class="page-item page-link">...</li>
+                                        <li class="page-item page-link"
+                                            [ngClass]="{'actived2': currentPage==i+currentPage-4 && currentPage > 5,'actived': currentPage==i+1 && currentPage <= 5}"
+                                            (click)="onClickPage(currentPage < 5 ? i+1: i+currentPage-4 )"
+                                            *ngFor="let c of counter(currentPage == page ? 5 : 6);let i=index">
+                                            {{currentPage < 5 ? i+1 : i+currentPage-4}}</li>
+                                        <li *ngIf="currentPage+1<page && page !=6" class="page-item page-link">...</li>
+                                        <li *ngIf="currentPage+1<page && page !=6" class="page-item page-link"
+                                            (click)="onClickPage(page)">{{page}}</li>
+                                        <li class="page-item page-link" (click)="onNextPage()">Next</li>
+                                    </ul>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
