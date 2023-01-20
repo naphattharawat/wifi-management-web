@@ -11,11 +11,13 @@ export class MemberService {
   ) { }
 
   async getList(query = '', limit = 10, offset = 0) {
+    console.log('get');
+    
     const url = `${this.apiUrl}/member?query=${query}&limit=${limit}&offset=${offset}`;
     const rs: any = await this.http.get(url).toPromise();
     return rs;
   }
-  
+
   async getTotal(query = '') {
     const url = `${this.apiUrl}/member/total?query=${query}`;
     const rs: any = await this.http.get(url).toPromise();

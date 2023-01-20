@@ -1,3 +1,4 @@
+import { LoginModule } from './login/login.module';
 import { MemberService } from './service/member.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
@@ -10,7 +11,11 @@ import { AppComponent } from './app.component';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { environment } from 'environments/environment';
 import { AutocompleteOffDirective } from './autocomplete-off.directive';
+import { JwtModule } from '@auth0/angular-jwt';
 
+export function tokenGetter() {
+  return localStorage.getItem("token");
+}
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -20,11 +25,19 @@ import { AutocompleteOffDirective } from './autocomplete-off.directive';
     ComponentsModule,
     RouterModule,
     AppRoutingModule,
+    LoginModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost'],
+        disallowedRoutes: ['/login'],
+      },
+    }),
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AutocompleteOffDirective,
+    AutocompleteOffDirective
 
   ],
   providers: [

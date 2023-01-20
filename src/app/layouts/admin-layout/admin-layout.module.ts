@@ -1,3 +1,5 @@
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuardService } from './../../service/auth-guard.service';
 import { AlertService } from './../../service/alert.service';
 import { MemberService } from './../../service/member.service';
 import { NgModule } from '@angular/core';
@@ -28,7 +30,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatTooltipModule,
+    MatTooltipModule
   ],
   declarations: [
     DashboardComponent,
@@ -39,7 +41,8 @@ import { MatSelectModule } from '@angular/material/select';
   ],
   providers: [
     MemberService,
-    AlertService
+    AlertService,
+    AuthGuardService
   ]
 })
 

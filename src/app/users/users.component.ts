@@ -37,6 +37,8 @@ export class UsersComponent implements OnInit {
         this.alertService.serverError();
       }
     } catch (error) {
+      console.log(error);
+
       this.alertService.error(error);
     }
   }
@@ -56,16 +58,17 @@ export class UsersComponent implements OnInit {
         this.alertService.serverError();
       }
     } catch (error) {
+      console.log(error);
       this.alertService.error(error);
     }
   }
 
   edit(i) {
-    this.router.navigateByUrl(`/user-profile?id=${i.id}`);
+    this.router.navigateByUrl(`/admin/user-profile?id=${i.id}`);
   }
 
   onClickAdd() {
-    this.router.navigateByUrl(`/user-profile`);
+    this.router.navigateByUrl(`/admin/user-profile`);
   }
 
   onKeySearch(e) {
