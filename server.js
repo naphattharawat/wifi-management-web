@@ -1,7 +1,7 @@
 var express = require('express')
 var path = require('path');
 var app = express()
-
+require('dotenv').config();
 app.use(express.static(path.join(__dirname, './dist/')));
 
 app.get('*', function (req, res) {
@@ -27,8 +27,8 @@ app.use(function (err, req, res, next) {
   res.send({ ok: false, error: err.message })
 });
 
-let port = 4002;
+let port = 3000 || process.env.PORT;
 
 app.listen(port, function () {
-  console.log(`Q4U listening on port ${port}!`)
+  console.log(`web listening on port ${port}!`)
 });
