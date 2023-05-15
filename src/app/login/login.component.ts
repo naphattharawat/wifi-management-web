@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
     const nanoid = customAlphabet('1234567890', 18)
     const state = nanoid();
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('mnm-token');
     const url = `https://auth.moph.go.th/v1/oauth2/auth?client_id=ApUtHyVQeEkSXaFvkuTV&response_type=code&state=${state}`;
     if (token) {
       if (this.jwtHelperService.isTokenExpired(token)) {

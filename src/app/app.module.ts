@@ -14,7 +14,7 @@ import { AutocompleteOffDirective } from './autocomplete-off.directive';
 import { JwtModule } from '@auth0/angular-jwt';
 
 export function tokenGetter() {
-  return localStorage.getItem("token");
+  return localStorage.getItem("mnm-token");
 }
 @NgModule({
   imports: [
