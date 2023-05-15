@@ -10,6 +10,8 @@ export class AuthGuardService {
   canActivate() {
     const token = localStorage.getItem('token');
     // const decodeToken = this.jwtHelper.decodeToken(token);
+    console.log(token);
+    
     if (token) {
       if (this.jwtHelper.isTokenExpired(token)) {
         this.router.navigate(['/login']);
