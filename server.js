@@ -27,7 +27,7 @@ app.use(function (err, req, res, next) {
   res.send({ ok: false, error: err.message })
 });
 
-let port = 3000 || process.env.PORT;
+let port = process.env.PORT || 3000;
 
 app.listen(port, function () {
   console.log(`web listening on port ${port}!`)
