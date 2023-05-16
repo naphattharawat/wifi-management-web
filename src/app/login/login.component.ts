@@ -1,3 +1,4 @@
+import { LoginService } from './../service/login.service';
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { customAlphabet } from 'nanoid'
@@ -12,24 +13,39 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private jwtHelperService: JwtHelperService,
+    private loginService: LoginService,
     private router: Router
   ) { }
 
   ngOnInit(): void {
     const nanoid = customAlphabet('1234567890', 18)
     const state = nanoid();
-    const token = localStorage.getItem('mnm-token');
-    const url = `https://auth.moph.go.th/v1/oauth2/auth?client_id=ApUtHyVQeEkSXaFvkuTV&response_type=code&state=${state}`;
+    const token = localStorage.getItem('mnm-token') || '';
     if (token) {
       if (this.jwtHelperService.isTokenExpired(token)) {
-        window.location.href = url;
+        // this.login();
       } else {
         this.router.navigate(['/admin']);
       }
     } else {
-      window.location.href = url;
+      // this.login();
     }
 
+  }
+
+  async login() {
+    try {
+      const rs: any = await this.loginService.redirect();
+      console.log(rs);
+      
+      if (rs.ok) {
+        window.location.href = rs.url;
+      }
+
+    } catch (error) {
+      console.log('error', error);
+
+    }
   }
 
 }

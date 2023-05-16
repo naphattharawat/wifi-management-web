@@ -1,0 +1,68 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 *ngIf="isUpdate" class="card-title">Edit Profile</h4>
+                        <h4 *ngIf="!isUpdate" class="card-title">Add Profile</h4>
+                        <p class="card-category">Complete your profile</p>
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="row">
+
+                                <div class="col-md-4" style="align-self: end;">
+                                    <mat-form-field >
+                                        <input matInput placeholder="cid" name="cid" required [(ngModel)]="cid"
+                                            autocompleteOff>
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-3" style="align-self: end;">
+                                    <mat-form-field >
+                                        <input matInput type="remark" placeholder="name" required name="remark"
+                                            [(ngModel)]="remark" autocompleteOff>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="isTicket"
+                                                [(ngModel)]="isTicket">
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                            เข้าระบบ Ticket
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" name="isManage"
+                                                [(ngModel)]="isManage">
+                                            <span class="form-check-sign">
+                                                <span class="check"></span>
+                                            </span>
+                                            เข้าระบบจัดการ
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="text-align:right">
+                                    <button [disabled]="isSave" *ngIf="isUpdate" mat-raised-button type="submit"
+                                        class="btn btn-danger pull-right" (click)="onClickUpdate()">Update
+                                        Profile</button>
+                                    <button [disabled]="isSave" *ngIf="!isUpdate" mat-raised-button type="submit"
+                                        class="btn btn-danger pull-right" (click)="onClickAdd()">Add Profile</button>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

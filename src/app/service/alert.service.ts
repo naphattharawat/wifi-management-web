@@ -49,7 +49,7 @@ export class AlertService {
       type: 'error',
       // confirmButtonText: 'ตกลง',
       showConfirmButton: false,
-      // timer: 1500
+      timer: 3000
     };
     swal(option);
 

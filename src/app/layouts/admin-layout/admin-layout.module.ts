@@ -18,6 +18,12 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { LoginService } from 'app/service/login.service';
+import { DashboardService } from 'app/service/dashboard.service';
+import { DateThPipe } from 'app/date-th.pipe';
+import { UserAdminComponent } from 'app/user-admin/user-admin.component';
+import { UserService } from 'app/service/users.service';
+import { UserAdminEditComponent } from 'app/user-admin-edit/user-admin-edit.component';
 
 @NgModule({
   imports: [
@@ -35,14 +41,18 @@ import { MatSelectModule } from '@angular/material/select';
   declarations: [
     DashboardComponent,
     UserProfileComponent,
+    UserAdminEditComponent,
     UsersComponent,
     // TypographyComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    DateThPipe,
+    UserAdminComponent
   ],
   providers: [
     MemberService,
     AlertService,
-    AuthGuardService
+    DashboardService,
+    UserService
   ]
 })
 

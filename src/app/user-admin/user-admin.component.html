@@ -6,7 +6,7 @@
                     <div class="card-header card-header-danger">
                         <div class="row">
                             <div class="col-md-8">
-                                <h4 class="card-title ">รายชื่อเจ้าหน้าที่ที่ใช้งาน internet moph</h4>
+                                <h4 class="card-title ">รายชื่อเจ้าหน้าที่ Admin</h4>
                             </div>
                             <div class="col-md-4" style="text-align: right;">
                                 <button class="btn btn-sm btn-success" (click)="onClickAdd()">เพิ่ม</button>
@@ -17,36 +17,19 @@
                     </div>
 
                     <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <span class="bmd-form-group">
-                                    <div class="input-group no-border">
-                                        <input type="text" value="" class="form-control" name="query"
-                                            [(ngModel)]="query" (keyup)=onKeySearch($event) placeholder="Search...">
-                                        <button mat-raised-button (click)="onClickSearch()"
-                                            class="btn btn-white btn-round btn-just-icon">
-                                            <i class="material-icons">search</i>
-                                            <div class="ripple-container"></div>
-                                        </button>
 
-                                    </div>
-                                </span>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="form-check">
-                                    <label class="form-check-label" *ngFor="let i of type">
-                                        <input class="form-check-input" type="checkbox" [value]="i.value"
-                                            (change)="onSelectType($event)" [(ngModel)]="i.checked">
-                                        <span class="form-check-sign">
-                                            <span class="check"></span>
-                                        </span>
-                                        {{i.name}}
-                                        &nbsp;
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
+                        <span class="bmd-form-group">
+                            <div class="input-group no-border">
+                                <input type="text" value="" class="form-control" name="query" [(ngModel)]="query"
+                                    (keyup)=onKeySearch($event) placeholder="Search...">
+                                <button mat-raised-button (click)="onClickSearch()"
+                                    class="btn btn-white btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
 
+                            </div>
+                        </span>
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class=" text-primary">
@@ -54,35 +37,35 @@
                                         ID
                                     </th>
                                     <th>
-                                        Username
+                                        CID
                                     </th>
                                     <th>
                                         Name
                                     </th>
                                     <th>
-                                        กอง
+                                        isTicket
                                     </th>
-                                    <th>หมายเหตุ</th>
+                                    <th>
+                                        isManage
+                                    </th>
                                     <th></th>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let i of list">
+                                    <tr *ngFor="let i of list;let idx=index;">
                                         <td>
-                                            {{i.id}}
+                                            {{idx+1}}
                                         </td>
                                         <td>
-                                            {{i.username}}
+                                            {{i.cid}}
                                         </td>
                                         <td>
-                                            {{i.first_name}} {{i.last_name}}
+                                            {{i.remark}} 
                                         </td>
                                         <td>
-                                            <span title="{{i.division_name}}">
-                                                {{i.division_short_name ? i.division_short_name :i.division_name}}
-                                            </span>
+                                            <i class="material-icons" *ngIf="i.is_ticket == 'Y'">done</i>
                                         </td>
                                         <td>
-                                            {{i.note}}
+                                            <i class="material-icons" *ngIf="i.is_manage == 'Y'">done</i>
                                         </td>
                                         <td class="td-actions text-right">
                                             <button mat-raised-button type="button" matTooltip="Edit Task"

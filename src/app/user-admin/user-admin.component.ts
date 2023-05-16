@@ -1,35 +1,30 @@
-import { AlertService } from './../service/alert.service';
-import { MemberService } from './../service/member.service';
+import { UserService } from 'app/service/users.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import * as _ from 'lodash';
-@Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
-})
-export class UsersComponent implements OnInit {
+import { AlertService } from 'app/service/alert.service';
+import { Router } from '@angular/router';
 
-  list: any = [];
+
+@Component({
+  selector: 'app-user-admin',
+  templateUrl: './user-admin.component.html',
+  styleUrls: ['./user-admin.component.scss']
+})
+export class UserAdminComponent implements OnInit {
+
+  list = [];
   currentPage = 1;
   limit = 10;
   page: any = 0;
   total = 0;
   query: any = '';
-  type: Array<any> = [
-    { name: 'Web', value: 'WEB', checked: true },
-    { name: 'MyMOPH', value: 'MYMOPH', checked: false },
-    { name: 'ThaiD', value: 'THAID', checked: false },
-    { name: 'Ticket', value: 'PUBLIC', checked: false }
-  ];
   constructor(
     private alertService: AlertService,
-    private memberService: MemberService,
+    private userService: UserService,
     private router: Router
+
   ) { }
 
   ngOnInit() {
-    this.getType();
     this.getList();
     this.getTotal();
   }
@@ -37,10 +32,7 @@ export class UsersComponent implements OnInit {
 
   async getList() {
     try {
-      const type = _.map(_.filter(this.type, { 'checked': true }), (t) => {
-        return t.value;
-      }).join(',');
-      const rs: any = await this.memberService.getList(this.query, type, this.limit, this.currentPage - 1);
+      const rs: any = await this.userService.getAdminList(this.query, this.limit, this.currentPage - 1);
       if (rs.ok) {
         this.list = rs.rows;
       } else {
@@ -55,7 +47,7 @@ export class UsersComponent implements OnInit {
 
   async getTotal() {
     try {
-      const rs: any = await this.memberService.getTotal(this.query);
+      const rs: any = await this.userService.getAdminTotal(this.query);
       if (rs.ok) {
         this.total = rs.count;
         this.page = Math.round(rs.count / this.limit);
@@ -74,11 +66,11 @@ export class UsersComponent implements OnInit {
   }
 
   edit(i) {
-    this.router.navigateByUrl(`/admin/user-profile?id=${i.id}`);
+    this.router.navigateByUrl(`/admin/users-admin-edit?id=${i.id}`);
   }
 
   onClickAdd() {
-    this.router.navigateByUrl(`/admin/user-profile`);
+    this.router.navigateByUrl(`/admin/users-admin-edit`);
   }
 
   onKeySearch(e) {
@@ -99,7 +91,7 @@ export class UsersComponent implements OnInit {
     try {
       const confirm = await this.alertService.confirm('คุณต้องการลบ ใช่หรือไม่ ?');
       if (confirm) {
-        const rs: any = await this.memberService.delete(i.id);
+        const rs: any = await this.userService.deleteAdmin(i.id);
         if (rs.ok) {
           this.getList();
           this.alertService.success();
@@ -134,26 +126,6 @@ export class UsersComponent implements OnInit {
     this.getList();
   }
 
-  getType() {
-    const type = localStorage.getItem('admin-users-type');
-    if (type) {
-      for (const t of type.split(',')) {
-        const idx = _.findIndex(this.type, { 'value': t });
-        this.type[idx].checked = true;
-      }
-    }
-  }
 
-  onSelectType(e) {
-    const idx = _.findIndex(this.type, { 'value': e.target.value });
-    if (idx > -1) {
-      this.type[idx].checked = e.target.checked;
-      const type = _.map(_.filter(this.type, { 'checked': true }), (t) => {
-        return t.value;
-      }).join(',');
-      localStorage.setItem('admin-users-type', type);
-      this.getList();
-    }
-  }
 
 }

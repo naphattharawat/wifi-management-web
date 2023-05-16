@@ -1,5 +1,4 @@
 import { LoginModule } from './login/login.module';
-import { MemberService } from './service/member.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -12,6 +11,7 @@ import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.compon
 import { environment } from 'environments/environment';
 import { AutocompleteOffDirective } from './autocomplete-off.directive';
 import { JwtModule } from '@auth0/angular-jwt';
+import { AuthGuardService } from './service/auth-guard.service';
 
 export function tokenGetter() {
   return localStorage.getItem("mnm-token");
@@ -29,7 +29,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost'],
+        allowedDomains: ['localhost:3000', 'localhost:4200'],
         disallowedRoutes: ['/login'],
       },
     }),
@@ -37,10 +37,11 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AutocompleteOffDirective
+    AutocompleteOffDirective 
 
   ],
   providers: [
+    AuthGuardService,
     { provide: 'API_URL', useValue: environment.apiUrl },
   ],
   bootstrap: [AppComponent]

@@ -15,4 +15,16 @@ export class LoginService {
     const rs: any = await this.http.post(url, { code }).toPromise();
     return rs;
   }
+
+  async redirect() {
+    const url = `${this.apiUrl}/login/redirect`;
+    console.log(url);
+    
+    const rs: any = await this.http.get(url).toPromise();
+    console.log(rs);
+    
+    return rs;
+  }
+
+
 }

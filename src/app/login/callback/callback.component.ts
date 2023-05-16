@@ -30,7 +30,7 @@ export class CallbackComponent implements OnInit {
     const rs: any = await this.loginService.login(this.code);
     if (rs.ok) {
       localStorage.setItem('mnm-token', rs.token);
-      this.router.navigateByUrl('/admin');
+      this.router.navigateByUrl('/admin/dashboard');
     } else {
       this.router.navigateByUrl('/login');
     }

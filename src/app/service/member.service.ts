@@ -10,19 +10,18 @@ export class MemberService {
     private http: HttpClient
   ) { }
 
-  async getList(query = '', limit = 10, offset = 0) {
-    console.log('get');
-    
-    const url = `${this.apiUrl}/member?query=${query}&limit=${limit}&offset=${offset}`;
+  async getList(query = '', type = 'WEB', limit = 10, offset = 0) {
+    const url = `${this.apiUrl}/member?query=${query}&limit=${limit}&offset=${offset}&type=${type}`;
     const rs: any = await this.http.get(url).toPromise();
     return rs;
   }
 
-  async getTotal(query = '') {
-    const url = `${this.apiUrl}/member/total?query=${query}`;
+  async getTotal(query = '',type = 'WEB') {
+    const url = `${this.apiUrl}/member/total?query=${query}&type=${type}`;
     const rs: any = await this.http.get(url).toPromise();
     return rs;
   }
+
   async getInfo(id) {
     const url = `${this.apiUrl}/member/${id}`;
     const rs: any = await this.http.get(url).toPromise();
@@ -50,6 +49,12 @@ export class MemberService {
   async delete(id) {
     const url = `${this.apiUrl}/member/${id}`;
     const rs: any = await this.http.delete(url).toPromise();
+    return rs;
+  }
+
+  async getCount() {
+    const url = `${this.apiUrl}/member/count`;
+    const rs: any = await this.http.get(url).toPromise();
     return rs;
   }
 }
