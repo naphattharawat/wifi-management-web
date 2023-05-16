@@ -12,6 +12,7 @@ import { environment } from 'environments/environment';
 import { AutocompleteOffDirective } from './autocomplete-off.directive';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuardService } from './service/auth-guard.service';
+import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 export function tokenGetter() {
   return localStorage.getItem("mnm-token");
@@ -37,11 +38,12 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AutocompleteOffDirective 
+    AutocompleteOffDirective
 
   ],
   providers: [
     AuthGuardService,
+    { provide: LocationStrategy, useClass: PathLocationStrategy },
     { provide: 'API_URL', useValue: environment.apiUrl },
   ],
   bootstrap: [AppComponent]
