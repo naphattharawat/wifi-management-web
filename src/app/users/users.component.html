@@ -56,9 +56,9 @@
                                     <th>
                                         Username
                                     </th>
-                                    <th>
+                                    <!-- <th>
                                         Name
-                                    </th>
+                                    </th> -->
                                     <th>
                                         กอง
                                     </th>
@@ -73,9 +73,9 @@
                                         <td>
                                             {{i.username}}
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             {{i.first_name}} {{i.last_name}}
-                                        </td>
+                                        </td> -->
                                         <td>
                                             <span title="{{i.division_name}}">
                                                 {{i.division_short_name ? i.division_short_name :i.division_name}}
@@ -85,7 +85,7 @@
                                             {{i.note}}
                                         </td>
                                         <td class="td-actions text-right">
-                                            <button mat-raised-button type="button" matTooltip="Edit Task"
+                                            <button mat-raised-button type="button" matTooltip="Edit User"
                                                 (click)="edit(i)" routerLinkActive="router-link-active"
                                                 [matTooltipPosition]="'above'"
                                                 class="btn btn-primary btn-link btn-sm btn-just-icon">

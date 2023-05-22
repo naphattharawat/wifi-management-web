@@ -5,20 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthGuardService } from './service/auth-guard.service';
+import { AdminLayoutModule } from './layouts/admin-layout/admin-layout.module';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'login',
     pathMatch: 'full',
-  }, {
-    path: 'admin',
-    component: AdminLayoutComponent,
-    canActivate: [AuthGuardService],
-    children: [{
-      path: '',
-      loadChildren: () => import('./layouts/admin-layout/admin-layout.module').then(m => m.AdminLayoutModule)
-    }]
   }
 ];
 
@@ -26,6 +19,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     BrowserModule,
+    AdminLayoutModule,
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'top',
       useHash: false

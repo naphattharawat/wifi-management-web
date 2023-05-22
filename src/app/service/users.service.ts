@@ -30,10 +30,11 @@ export class UserService {
   }
 
   async deleteAdmin(id) {
-    const url = `${this.apiUrl}/users/admin`;
+    const url = `${this.apiUrl}/users/admin?id=${id}`;
     const rs: any = await this.http.delete(url).toPromise();
     return rs;
   }
+  
   async updateAdmin(data) {
     const url = `${this.apiUrl}/users/admin`;
     const rs: any = await this.http.put(url, data).toPromise();

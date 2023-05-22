@@ -10,11 +10,10 @@ import { AlertService } from 'app/service/alert.service';
 })
 export class DashboardComponent implements OnInit {
 
-  total = 0;
-  mymoph = 0;
-  thaid = 0;
-  ticket = 0;
-  web = 0;
+  total:any;
+  staff:any;
+  thaid:any;
+  ticket:any;
   listThaidD = [];
   listTicket = [];
   constructor(
@@ -77,6 +76,7 @@ export class DashboardComponent implements OnInit {
 
     seq2 = 0;
   };
+
   ngOnInit() {
 
     this.getTotal();
@@ -167,10 +167,14 @@ export class DashboardComponent implements OnInit {
     try {
       const rs: any = await this.dashboardService.getCount();
       if (rs.ok) {
-        this.ticket = _.sumBy(rs.rows, function (o) { return o.type == 'PUBLIC' ? o.count : 0; });
-        this.web = _.sumBy(rs.rows, function (o) { return o.type == 'WEB' ? o.count : 0; });
-        this.mymoph = _.sumBy(rs.rows, function (o) { return o.type == 'MYMOPH' ? o.count : 0; });
-        this.thaid = _.sumBy(rs.rows, function (o) { return o.type == 'THAID' ? o.count : 0; });
+        this.ticket = `${rs.rows.ticket.count}`;
+        this.staff = `${rs.rows.staff.count}`;
+        this.thaid = `${rs.rows.thaid.count}`;
+        this.total = rs.rows.ticket.count+rs.rows.staff.count+rs.rows.thaid.count;
+        // this.ticket = `${rs.rows.ticket.use}/${rs.rows.ticket.count}`;
+        // this.staff = `${rs.rows.staff.use}/${rs.rows.staff.count}`;
+        // this.thaid = `${rs.rows.thaid.use}/${rs.rows.thaid.count}`;
+        // this.total = `${rs.rows.ticket.use+rs.rows.staff.use+rs.rows.thaid.use}/${rs.rows.ticket.count+rs.rows.staff.count+rs.rows.thaid.count}`
       } else {
         this.alertService.error(rs.error);
       }

@@ -66,11 +66,11 @@ export class UserAdminComponent implements OnInit {
   }
 
   edit(i) {
-    this.router.navigateByUrl(`/admin/users-admin-edit?id=${i.id}`);
+    this.router.navigateByUrl(`/admin-users-admin-edit?id=${i.id}`);
   }
 
   onClickAdd() {
-    this.router.navigateByUrl(`/admin/users-admin-edit`);
+    this.router.navigateByUrl(`/admin-users-admin-edit`);
   }
 
   onKeySearch(e) {

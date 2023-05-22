@@ -17,7 +17,7 @@ export class UsersComponent implements OnInit {
   total = 0;
   query: any = '';
   type: Array<any> = [
-    { name: 'Web', value: 'WEB', checked: true },
+    { name: 'Web', value: 'WEB', checked: false },
     { name: 'MyMOPH', value: 'MYMOPH', checked: false },
     { name: 'ThaiD', value: 'THAID', checked: false },
     { name: 'Ticket', value: 'PUBLIC', checked: false }
@@ -40,7 +40,7 @@ export class UsersComponent implements OnInit {
       const type = _.map(_.filter(this.type, { 'checked': true }), (t) => {
         return t.value;
       }).join(',');
-      const rs: any = await this.memberService.getList(this.query, type, this.limit, this.currentPage - 1);
+      const rs: any = await this.memberService.getList(this.query, type, this.limit, this.limit * (this.currentPage - 1));
       if (rs.ok) {
         this.list = rs.rows;
       } else {
@@ -55,7 +55,10 @@ export class UsersComponent implements OnInit {
 
   async getTotal() {
     try {
-      const rs: any = await this.memberService.getTotal(this.query);
+      const type = _.map(_.filter(this.type, { 'checked': true }), (t) => {
+        return t.value;
+      }).join(',');
+      const rs: any = await this.memberService.getTotal(this.query, type);
       if (rs.ok) {
         this.total = rs.count;
         this.page = Math.round(rs.count / this.limit);
@@ -74,11 +77,11 @@ export class UsersComponent implements OnInit {
   }
 
   edit(i) {
-    this.router.navigateByUrl(`/admin/user-profile?id=${i.id}`);
+    this.router.navigateByUrl(`/admin-user-profile?id=${i.id}`);
   }
 
   onClickAdd() {
-    this.router.navigateByUrl(`/admin/user-profile`);
+    this.router.navigateByUrl(`/admin-user-profile`);
   }
 
   onKeySearch(e) {
@@ -141,6 +144,8 @@ export class UsersComponent implements OnInit {
         const idx = _.findIndex(this.type, { 'value': t });
         this.type[idx].checked = true;
       }
+    } else {
+      this.type[0].checked = true;
     }
   }
 
@@ -152,6 +157,7 @@ export class UsersComponent implements OnInit {
         return t.value;
       }).join(',');
       localStorage.setItem('admin-users-type', type);
+      this.getTotal();
       this.getList();
     }
   }

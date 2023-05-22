@@ -28,6 +28,7 @@ export class UserProfileComponent implements OnInit {
 
   isUpdate = false;
   isSave = false;
+  isShow = false;
   constructor(
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -165,5 +166,8 @@ export class UserProfileComponent implements OnInit {
       this.isSave = false;
       this.alertService.error(error);
     }
+  }
+  showName() {
+
   }
 }
