@@ -25,10 +25,13 @@ export class UserProfileComponent implements OnInit {
   password: any;
   isEditPassword: any;
   isActived: any = true;
+  type: any;
 
   isUpdate = false;
   isSave = false;
   isShow = false;
+
+  infoHr: any = {};
   constructor(
     private alertService: AlertService,
     private route: ActivatedRoute,
@@ -75,6 +78,7 @@ export class UserProfileComponent implements OnInit {
         this.note = rs.rows.note;
         this.divisionId = rs.rows.division_id;
         this.password = '';
+        this.type = rs.rows.type;
 
         this.isActived = rs.rows.is_actived === 'Y' ? true : false;
       } else {
@@ -88,34 +92,36 @@ export class UserProfileComponent implements OnInit {
   async onClickUpdate() {
     try {
       this.isSave = true;
-      const confirm = await this.alertService.confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่?');
-      if (confirm) {
-        if (this.isUpdate) {
-          const obj: any = {};
-          this.info.cid !== this.cid ? obj.cid = this.cid : null;
-          this.info.username !== this.username ? obj.username = this.username : null;
-          this.info.first_name !== this.fname ? obj.firstName = this.fname : null;
-          this.info.last_name !== this.lname ? obj.lastName = this.lname : null;
-          this.info.email !== this.email ? obj.email = this.email : null;
-          this.info.tel !== this.tel ? obj.tel = this.tel : null;
-          this.info.note !== this.note ? obj.note = this.note : null;
-          this.info.division_id !== this.divisionId ? obj.divisionId = this.divisionId : null;
-          (this.info.is_actived === 'Y' ? true : false) !== this.isActived ? obj.isActived = (this.isActived ? 'Y' : 'N') : null;
-          this.password.length > 1 ? obj.password = this.password : null;
-          const rs: any = await this.memberService.update(this.id, obj);
-          if (rs.ok) {
-            this.alertService.success();
-            this.getInfo();
+      if (this.type != 'MYMOPH') {
+        const confirm = await this.alertService.confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่?');
+        if (confirm) {
+          if (this.isUpdate) {
+            const obj: any = {};
+            this.info.cid !== this.cid ? obj.cid = this.cid : null;
+            this.info.username !== this.username ? obj.username = this.username : null;
+            this.info.first_name !== this.fname ? obj.firstName = this.fname : null;
+            this.info.last_name !== this.lname ? obj.lastName = this.lname : null;
+            this.info.email !== this.email ? obj.email = this.email : null;
+            this.info.tel !== this.tel ? obj.tel = this.tel : null;
+            this.info.note !== this.note ? obj.note = this.note : null;
+            this.info.division_id !== this.divisionId ? obj.divisionId = this.divisionId : null;
+            (this.info.is_actived === 'Y' ? true : false) !== this.isActived ? obj.isActived = (this.isActived ? 'Y' : 'N') : null;
+            this.password.length > 1 ? obj.password = this.password : null;
+            const rs: any = await this.memberService.update(this.id, obj);
+            if (rs.ok) {
+              this.alertService.success();
+              this.getInfo();
+            } else {
+              this.alertService.error(rs.error);
+            }
+            this.isSave = false;
           } else {
-            this.alertService.error(rs.error);
+            this.alertService.error('เกิดข้อผิดพลาด กรุณา refresh');
+            this.isSave = false;
           }
-          this.isSave = false;
         } else {
-          this.alertService.error('เกิดข้อผิดพลาด กรุณา refresh');
           this.isSave = false;
         }
-      } else {
-        this.isSave = false;
       }
     } catch (error) {
       this.isSave = false;
@@ -169,5 +175,21 @@ export class UserProfileComponent implements OnInit {
   }
   showName() {
 
+  }
+
+  async onClickShowHR() {
+    try {
+      const rs: any = await this.memberService.getInfoHr(this.cid);
+      // this.infoHr = rs.data;
+      if (rs.ok) {
+        const html = `<table style="text-align:left;width:100%"><tr style="border: 0.5px solid black"><td>ตำแหน่ง</td><td>${rs.rows.position}</td></tr><tr  style="border: 0.5px solid black"><td>ปฏิบัติงานตามจ.</td>
+        <td>${rs.rows.departmentj18}</td></tr><tr  style="border: 0.5px solid black"><td>ปฏิบัติงานตามจริง</td><td>${rs.rows.departmentreal}</td></tr></table>`;
+        this.alertService.popup('ข้อมูล HR', html);
+      } else {
+        this.alertService.error('ไม่พบข้อมูล');
+      }
+    } catch (error) {
+      this.alertService.error(error);
+    }
   }
 }

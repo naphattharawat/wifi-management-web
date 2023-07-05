@@ -16,7 +16,7 @@ export class MemberService {
     return rs;
   }
 
-  async getTotal(query = '',type = 'WEB') {
+  async getTotal(query = '', type = 'WEB') {
     const url = `${this.apiUrl}/member/total?query=${query}&type=${type}`;
     const rs: any = await this.http.get(url).toPromise();
     return rs;
@@ -57,4 +57,11 @@ export class MemberService {
     const rs: any = await this.http.get(url).toPromise();
     return rs;
   }
+
+  async getInfoHr(cid) {
+    const url = `${this.apiUrl}/member/position?cid=${cid}`;
+    const rs: any = await this.http.get(url).toPromise();
+    return rs;
+  }
+
 }

@@ -68,4 +68,23 @@ export class AlertService {
     };
     return swal(option);
   }
+
+  popup(title = '', text = '') {
+    const option: SweetAlertOptions = {
+      title: title,
+      html: text,
+      type: 'success',
+      confirmButtonText: 'ตกลง',
+      width: '700px'
+    };
+    swal(option)
+      .then(
+        function () { },
+        // handling the promise rejection
+        function (dismiss) {
+          if (dismiss === 'timer') { }
+        }
+      );
+
+  }
 }
