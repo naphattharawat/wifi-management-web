@@ -92,7 +92,7 @@ export class UserProfileComponent implements OnInit {
   async onClickUpdate() {
     try {
       this.isSave = true;
-      if (this.type != 'MYMOPH') {
+      if (this.type == 'WEB') {
         const confirm = await this.alertService.confirm('คุณต้องการแก้ไขข้อมูล ใช่หรือไม่?');
         if (confirm) {
           if (this.isUpdate) {

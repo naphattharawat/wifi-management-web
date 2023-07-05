@@ -101,13 +101,13 @@
                       เปิดใช้งาน
                     </label>
                   </div>
-                  <span *ngIf="type=='MYMOPH'">(ข้อมูลจาก MyMOPH สามารถดูได้อย่างเดียว)</span>
+                  <span *ngIf="type=='MYMOPH'">(ข้อมูลจาก MyMOPH,ThaiD,Ticket สามารถดูได้อย่างเดียว)</span>
                 </div>
                 <div class="col-md-6" style="text-align:right">
                  
                   <button [disabled]="isSave" *ngIf="isUpdate" mat-raised-button type="submit"
                     class="btn btn-primary pull-right" (click)="onClickShowHR()">ดูข้อมูลจาก HROPS</button>
-                  <button [disabled]="isSave || type=='MYMOPH'" *ngIf="isUpdate && type != 'MYMOPH'" mat-raised-button type="submit"
+                  <button [disabled]="isSave || type=='MYMOPH'" *ngIf="isUpdate && type == 'WEB'" mat-raised-button type="submit"
                     class="btn btn-danger pull-right" (click)="onClickUpdate()">Update Profile</button>
                   <button [disabled]="isSave" *ngIf="!isUpdate" mat-raised-button type="submit"
                     class="btn btn-danger pull-right" (click)="onClickAdd()">Add Profile</button>
