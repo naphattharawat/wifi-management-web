@@ -18,7 +18,8 @@ export class UsersComponent implements OnInit {
   query: any = '';
   type: Array<any> = [
     { name: 'Web', value: 'WEB', checked: false },
-    { name: 'MyMOPH', value: 'MYMOPH', checked: false },
+    { name: 'MyMOPH(เก่า)', value: 'MYMOPH', checked: false },
+    { name: 'MyMOPH', value: 'MYMOPHTEMP', checked: false },
     { name: 'ThaiD', value: 'THAID', checked: false },
     { name: 'Ticket', value: 'PUBLIC', checked: false }
   ];
