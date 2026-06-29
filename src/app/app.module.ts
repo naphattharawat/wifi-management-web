@@ -30,7 +30,7 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ['localhost:3000', 'localhost:4200'],
+        allowedDomains: ['localhost:3000', 'localhost:4200','internet-ops.moph.go.th'],
         disallowedRoutes: ['/login'],
       },
     }),
